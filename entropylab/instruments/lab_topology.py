@@ -458,7 +458,7 @@ class LabResources:
         """
         is_entropy_resource = issubclass(resource_class, Resource)
         if not is_entropy_resource:
-            logger.warn(
+            logger.warning(
                 f"instrument {name} is not an entropylab Resource and"
                 f" additional metadata won't be saved"
             )
@@ -493,7 +493,7 @@ class LabResources:
         try:
             source = inspect.getsource(inspect.getmodule(resource_class))
         except Exception:
-            logger.warn(f"could not save source of {resource_class.__qualname__}")
+            logger.warning(f"could not save source of {resource_class.__qualname__}")
             source = ""
         self._persistent_db.save_new_resource_driver(
             name,
@@ -556,7 +556,7 @@ class ExperimentResources:
         """
         don't save results in this experiment
         """
-        logger.warn(
+        logger.warning(
             "DB saving paused, results will be permanently lost on session close"
         )
         self._save_to_db = False
@@ -565,7 +565,7 @@ class ExperimentResources:
         """
         save results in this experiment
         """
-        logger.warn("DB saving resumed, results will be safely saved to db")
+        logger.warning("DB saving resumed, results will be safely saved to db")
         self._save_to_db = True
 
     def get_results_db(self) -> Optional[DataWriter]:

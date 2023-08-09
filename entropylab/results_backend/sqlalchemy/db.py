@@ -1,16 +1,15 @@
 import os
 from datetime import datetime
+from contextlib import contextmanager
 from typing import List, TypeVar, Optional, ContextManager, Iterable, Union, Any
 from typing import Set
 
 import jsonpickle
-import pandas as pd
 from pandas import DataFrame
-from sqlalchemy import create_engine, desc
+from sqlalchemy import create_engine, text, desc
 from sqlalchemy.exc import DBAPIError
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.sql import Selectable
-from sqlalchemy.util.compat import contextmanager
 
 from entropylab.api.data_reader import (
     DataReader,
@@ -245,11 +244,12 @@ class SqlAlchemyDB(DataWriter, DataReader, PersistentLabDB):
     def custom_query(self, query: Union[str, Selectable]) -> DataFrame:
         with self._session_maker() as sess:
             if isinstance(query, str):
-                selectable = query
+                selectable = text(query)
             else:
                 selectable = query.statement
 
-            return pd.read_sql(selectable, sess.bind)
+            result = sess.execute(selectable)
+            return DataFrame(result.all(), columns=result.keys())
 
     def _execute_transaction(self, transaction):
         with self._session_maker() as sess:
@@ -259,7 +259,8 @@ class SqlAlchemyDB(DataWriter, DataReader, PersistentLabDB):
 
     @staticmethod
     def _query_pandas(query):
-        return pd.read_sql(query.statement, query.session.bind)
+        result = query.session.execute(query.statement)
+        return DataFrame(result.all(), columns=result.keys())
 
     @contextmanager
     def _session_maker(self) -> ContextManager[Session]:

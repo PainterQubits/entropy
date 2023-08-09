@@ -177,7 +177,7 @@ class ExperimentDefinition(abc.ABC):
         :rtype: _Experiment
         """
         if db is None and (not self._resources or not self._resources.get_results_db()):
-            logger.warn(
+            logger.warning(
                 f"Results of current execution {self.label} "
                 f"will be permanently lost on session close"
             )
