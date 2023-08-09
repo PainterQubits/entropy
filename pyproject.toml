@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "entropylab"
-version = "0.1.2"
+version = "0.1.3"
 description = ""
 license = "BSD-3-Clause"
 authors = [
@@ -9,7 +9,7 @@ authors = [
     "Gal Winer <gal@quantum-machines.co>",
     "Tal Shani <tal@quantum-machines.co>"
 ]
-packages = [{ include = "entropylab" }]
+packages = [{include = "entropylab"}]
 exclude = ["**/tests/**"]
 readme = "README.md"
 homepage = "https://github.com/entropy-lab/entropy"
