@@ -1,4 +1,4 @@
-# Entropy v0.1.2 Updated
+# Painter Lab Entropy
 
 This is a fork of Entropy used by the Painter Lab at Caltech. It updates an older version
 of Entropy still in use by the lab to use newer Python dependencies and type hints.
