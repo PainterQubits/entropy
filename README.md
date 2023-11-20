@@ -8,7 +8,7 @@ of Entropy still in use by the lab to use newer Python dependencies and type hin
 Install from GitHub with the following command:
 
 ```
-pip install git+https://github.com/PainterQubits/entropy
+pip install git+https://github.com/PainterQubits/entropylab
 ```
 
 ## Usage
